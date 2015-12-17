@@ -1,5 +1,5 @@
 # rapidjson2struct
-convert rapidjson to stuct 
+convert rapidjson to struct 
 
 ### usage
 
