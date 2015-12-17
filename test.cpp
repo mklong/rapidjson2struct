@@ -99,6 +99,9 @@ int main(){
 
     g.print();
 
+    printf("debug info: \n");
+    g.debug_print();
+
     return 0;
 }
 

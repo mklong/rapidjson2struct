@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "rapidjson/document.h"
 
@@ -72,8 +73,6 @@ namespace rapidjson2struct{
     };
 
     class base {
-
-
 
     public:
         base(){}
@@ -542,6 +541,152 @@ namespace rapidjson2struct{
 
         }
 
+        void debug_print(){
+
+            std::cout <<"{"<< std::endl;
+
+            for (int i = 0; i < members_.size(); ++i) {
+                const member_meta & m = members_[i];
+
+                switch (m.type_){
+                    case TYPE_BOOL:
+                    {
+                        bool *b = (bool *) m.obj_;
+                        std::cout << m.name_ << " : " << *b << std::endl;
+                    }
+                        break;
+
+                    case TYPE_STRING:
+                    {
+                        string *s = (string *) m.obj_;
+                        std::cout << m.name_ << " : " << *s << std::endl;
+                    }
+                        break;
+
+                    case TYPE_STRUCT:
+                    {
+                        std::cout << m.name_ << " : " << std::endl;
+                        base * s = static_cast<base *>(m.obj_);
+                        s->debug_print();
+                    }
+                        break;
+
+                    case TYPE_NUMBER:
+                    {
+                        switch (m.num_type_){
+
+                            case NUMBER_INT:
+                            {
+                                type_int * n = (type_int *)m.obj_;
+                                std::cout << m.name_ << " : " << *n << std::endl;
+                            }
+                                break;
+                            case NUMBER_UINT:
+                            {
+                                type_uint * n = (type_uint *)m.obj_;
+                                std::cout << m.name_ << " : " << *n << std::endl;
+                            }
+                                break;
+                            case NUMBER_INT64:
+                            {
+                                type_int64 * n = (type_int64 *)m.obj_;
+                                std::cout << m.name_ << " : " << *n << std::endl;
+                            }
+                                break;
+                            case NUMBER_UINT64:
+                            {
+                                type_uint64 * n = (type_uint64 *)m.obj_;
+                                std::cout << m.name_ << " : " << *n << std::endl;
+                            }
+                                break;
+                            case NUMBER_DOUBLE:
+                            {
+                                type_double * n = (type_double *)m.obj_;
+                                std::cout << m.name_ << " : " << *n << std::endl;
+                            }
+                                break;
+                            default:
+                                break;
+                        }
+
+                    }
+                        break;
+
+                    case TYPE_ARRAY: {
+                        std::cout << m.name_ << " : [" << std::endl;
+                        switch (m.arr_type_) {
+                            case TYPE_BOOL: {
+                                vector<bool> *bool_arr = static_cast<vector<bool> *>(m.obj_);
+                                for (int i = 0; i < bool_arr->size(); i++)
+
+                                    std::cout << bool_arr->at(i) << std::endl;
+                            }
+                                break;
+
+                            case TYPE_STRING: {
+                                vector<string> *string_arr = static_cast<vector<string> *>(m.obj_);
+                                for (int i = 0; i < string_arr->size(); i++) {
+                                    std::cout << string_arr->at(i) << std::endl;
+                                }
+                            }
+                                break;
+
+                            case TYPE_STRUCT: {
+                                vector<base *> *struct_arr = static_cast<vector<base *> *>(m.obj_);
+                                for (int i = 0; i < struct_arr->size(); i++) {
+                                    struct_arr->at(i)->debug_print();
+                                }
+                            }
+                                break;
+
+                            case TYPE_NUMBER: {
+                                switch (m.num_type_) {
+
+                                    case NUMBER_INT: {
+                                        vector<type_uint> *num_arr = static_cast<vector<type_uint> *>(m.obj_);
+                                        for (int i = 0; i < num_arr->size(); i++)
+                                            std::cout << num_arr->at(i) << std::endl;
+                                    }
+                                        break;
+                                    case NUMBER_UINT: {
+                                        vector<type_uint> *num_arr = static_cast<vector<type_uint> *>(m.obj_);
+                                        for (int i = 0; i < num_arr->size(); i++)
+                                            std::cout << num_arr->at(i) << std::endl;
+                                    }
+                                        break;
+                                    case NUMBER_INT64: {
+                                        vector<type_int64> *num_arr = static_cast<vector<type_int64> *>(m.obj_);
+                                        for (int i = 0; i < num_arr->size(); i++)
+                                            std::cout << num_arr->at(i) << std::endl;
+                                    }
+                                        break;
+                                    case NUMBER_UINT64: {
+                                        vector<type_uint64> *num_arr = static_cast<vector<type_uint64> *>(m.obj_);
+                                        for (int i = 0; i < num_arr->size(); i++)
+                                            std::cout << num_arr->at(i) << std::endl;
+                                    }
+                                        break;
+                                    case NUMBER_DOUBLE: {
+                                        vector<type_double> *num_arr = static_cast<vector<type_double> *>(m.obj_);
+                                        for (int i = 0; i < num_arr->size(); i++)
+                                            std::cout << num_arr->at(i) << std::endl;
+                                    }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                                break;
+                        }
+                        std::cout << "]" << std::endl;
+                    }
+                    default:
+                        break;
+                }
+            }
+            std::cout <<"}"<< std::endl;
+
+        };
     private:
 
         string  parse_error_name_;
