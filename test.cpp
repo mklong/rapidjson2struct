@@ -64,6 +64,10 @@ public:
         add_array_struct_member(&students,"students",alloc<student>,true);
         add_bool_member(rocket,"rocket");
     }
+
+private:
+    grade(const grade &);
+    grade &operator= (const grade &);
 };
 
 
