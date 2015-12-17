@@ -1,7 +1,10 @@
 # rapidjson2struct
 convert rapidjson to struct 
 
-### usage
+
+[Changes](https://github.com/mklong/rapidjson2struct/blob/master/CHANGES.md)
+
+### Usage
 
 ---
 
