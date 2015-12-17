@@ -16,7 +16,7 @@ namespace rapidjson2struct{
 
     typedef int                 type_int;
     typedef unsigned int        type_uint;
-    typedef	long long           type_int64;
+    typedef long long           type_int64;
     typedef unsigned long long  type_uint64;
     typedef double              type_double;
 
